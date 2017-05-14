@@ -39,7 +39,6 @@ def hd_cpu():
         "cpu_logic_nums": cpu_logic_nums,
         "cpu_hd_nums": cpu_hd_nums
     }
-    print("cpu个数:\n\t{hd_cpu_dic}".format(hd_cpu_dic=hd_cpu_dic))
     return hd_cpu_dic
 
 def sys_cpu():
@@ -54,7 +53,6 @@ def sys_cpu():
 
     # cpu的整个信息
     cpu_all = psutil.cpu_times()
-    print("cpu使用:\n\t{cpu_all}".format(cpu_all=cpu_all))
     return cpu_all
 
 def sys_mem():
@@ -66,7 +64,6 @@ def sys_mem():
     """
 
     sys_mem_all = psutil.virtual_memory()
-    print("物理内存使用:\n\t{sys_mem_all}".format(sys_mem_all=sys_mem_all))
     return sys_mem_all
 
 def sys_swap():
@@ -78,7 +75,6 @@ def sys_swap():
     """
 
     sys_swap_all = psutil.swap_memory()
-    print("swap使用:\n\t{sys_swap_all}".format(sys_swap_all=sys_swap_all))
     return sys_swap_all
 
 def sys_diskio():
@@ -92,7 +88,6 @@ def sys_diskio():
     sys_diskio_all = psutil.disk_io_counters()
     # perdisk=True参数获取单个分区IO个数
     # sys_diskio_per_all = psutil.disk_io_counters(perdisk=True)    
-    print("diskio使用:\n\t{sys_diskio_all}".format(sys_diskio_all=sys_diskio_all))
     return sys_diskio_all
 
 def sys_netio():
@@ -106,7 +101,6 @@ def sys_netio():
     # sys_netio_all = psutil.net_io_counters()
     # pernic=True输出网络每个接口信息
     sys_netio_all = psutil.net_io_counters(pernic=True)
-    print("网络IO使用:\n\t{sys_netio_all}".format(sys_netio_all=sys_netio_all))
     return sys_netio_all
 
 def sys_disk_partition():
@@ -118,8 +112,6 @@ def sys_disk_partition():
     """
 
     sys_disk_partition_all = psutil.disk_partitions()
-    print("磁盘分区分区信息:\n\t{sys_disk_partition_all}".format(
-        sys_disk_partition_all=sys_disk_partition_all))
     return sys_disk_partition_all
 
 
@@ -133,8 +125,6 @@ def sys_disk_usage(part):
 
     sys_disk_partition_all = psutil.disk_partitions
     sys_disk_usage_all = psutil.disk_usage(part)
-    print("磁盘分区容量信息:\n\t{sys_disk_usage_all}".format(
-        sys_disk_usage_all=sys_disk_usage_all))
     return sys_disk_usage_all
 
 def sys_user():
@@ -144,29 +134,54 @@ def sys_user():
         获取单项值, 加上.xxx或加序号就可以获取到
     """
     sys_user_all = psutil.users()
-    print("当前登录用户信息:\n\t{sys_user_all}".format(sys_user_all=sys_user_all))
     return sys_user_all
 
 def sys_pids():
-    # 查看系统全部进程
+    """查看系统全部进程
+    参  数：无
+    返回值: 返回一个所有当前进行PID列表
+        [1, 2, 3, 7, 8, 9, 10, 11, 12, 13, 15, 16, 17]
+    """
     sys_pids_all = psutil.pids()
-    print(sys_pids_all)
+    return sys_pids_all
 
 def sys_proc(pid):
-    # 使用psutil.Process()方法获取单个进程的名称,路径状态等
+    """获取单个进程的名称,路径状态等
+    参  数：无
+    返回值: 返回一个所有当前进行PID列表
+        psutil.Process(pid=1, name='systemd')
+    Ex:
+        p = psutil.Process(pid)
+        p.name()
+        p.exe()
+        等
+    """
     sys_proc_all = psutil.Process(pid)
-    print("指定PID的信息：{sys_proc_all}".format(sys_proc_all=sys_proc_all))
-    # sys_proc_all.pid
+    return sys_proc_all
 
 if __name__ == "__main__":
-    hd_cpu()
-    sys_cpu()
-    sys_mem()
-    sys_swap()
-    sys_diskio()
-    sys_disk_partition()
-    sys_disk_usage('/')
-    sys_netio()
-    sys_user()
-    sys_pids()
-    sys_proc(1)
+    hd_cpu_dic = hd_cpu()
+    print("cpu个数:\n\t{hd_cpu_dic}".format(hd_cpu_dic=hd_cpu_dic))
+    cpu_all = sys_cpu()
+    print("cpu使用:\n\t{cpu_all}".format(cpu_all=cpu_all))
+    sys_mem_all = sys_mem()
+    print("物理内存使用:\n\t{sys_mem_all}".format(sys_mem_all=sys_mem_all))
+    sys_swap_all = sys_swap()
+    print("swap使用:\n\t{sys_swap_all}".format(sys_swap_all=sys_swap_all))
+    sys_diskio_all = sys_diskio()
+    print("diskio使用:\n\t{sys_diskio_all}".format(sys_diskio_all=sys_diskio_all))
+    sys_disk_partition_all = sys_disk_partition()
+    print("磁盘分区分区信息:\n\t{sys_disk_partition_all}".format(
+        sys_disk_partition_all=sys_disk_partition_all))
+    sys_disk_usage_all = sys_disk_usage('/')
+    print("磁盘分区容量信息:\n\t{sys_disk_usage_all}".format(
+        sys_disk_usage_all=sys_disk_usage_all))
+    sys_netio_all = sys_netio()
+    print("网络IO使用:\n\t{sys_netio_all}".format(sys_netio_all=sys_netio_all))
+    sys_user_all = sys_user()
+    print("当前登录用户信息:\n\t{sys_user_all}".format(sys_user_all=sys_user_all))
+    sys_pids_all = sys_pids()
+    print("当前运行的PID:\n\t{sys_pids_all}".format(sys_pids_all=sys_pids_all))
+    sys_proc_all = sys_proc(1)
+    print("指定PID的信息:\n\t{sys_proc_all}".format(sys_proc_all=sys_proc_all))
+    print sys_proc_all.name()
