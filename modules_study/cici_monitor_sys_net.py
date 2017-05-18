@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#-*? coding=utf-8 *-*
+#-*- coding=utf-8 *-*
 """
  Function: 网络流量监控
      Date: 2017/05/14
