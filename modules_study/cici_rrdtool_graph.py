@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import rrdtool
 import time
@@ -12,8 +12,8 @@ title="服务器网络流量图 ("+time.strftime('%Y-%m-%d',time.localtime(time.
 rrdtool.graph( "flow.png", "--start", "-1h","--vertical-label=Bytes/s",
  "--x-grid","MINUTE:1:MINUTE:5:MINUTE:5:0:%H:%M",
  "--width","650","--height","230","--title",title,
- "DEF:indata=flow.rrd:eth1_in:AVERAGE",    #指定网卡入流量数据源DS及CF
- "DEF:outdata=flow.rrd:eth1_out:AVERAGE",    #指定网卡出流量数据源DS及CF
+ "DEF:indata=flow.rrd:nic_in:AVERAGE",    #指定网卡入流量数据源DS及CF
+ "DEF:outdata=flow.rrd:nic_out:AVERAGE",    #指定网卡出流量数据源DS及CF
  "CDEF:total=indata,outdata,+",    #通过CDEF合并网卡出入流量，得出总流量total
  "LINE1:total#FF8833:Total traffic",    #以线条方式绘制总流量
  "AREA:indata#00FF00:In traffic",    #以面积方式绘制入流量
